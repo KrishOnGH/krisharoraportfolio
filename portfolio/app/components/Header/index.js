@@ -65,7 +65,7 @@ export default function index(colorMode) {
 
 	return (
 		<header className={`${colorMode ? 'text-white navglass' : 'text-black navglass-light'} body-font border-b-2 border-neutral-800`}>
-			<div className="container mx-auto flex flex-wrap py-3 md:py-5 lg:justify-between px-5 text-sm md:px-10 flex-row items-center">
+			<div className="container mx-auto flex flex-wrap py-3 md:py-5 justify-between px-5 text-sm md:px-10 flex-row items-center">
 				<a className="flex items-center text-xl font-bold px-5 lg:px-0">
 					Krish Arora
 				</a>

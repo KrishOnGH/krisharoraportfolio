@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import './globals.css'
-import Image from "next/image";
 import Bkg from './components/Header/background';
 import Header from './components/Header';
 import Hero from './components/Hero';
