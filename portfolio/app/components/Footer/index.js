@@ -1,5 +1,4 @@
 import React from 'react';
-import content from '../../../content.json'
 
 export default function index(colorMode) {
 	colorMode = colorMode["colorMode"]
