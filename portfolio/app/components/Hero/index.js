@@ -10,7 +10,7 @@ export default function index(colorMode) {
 	}
 	
 	return (
-		<div>
+		<div id='home'>
 			
 		</div>
 	);

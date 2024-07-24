@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
+import './globals.css'
 import Image from "next/image";
+import Bkg from './components/Header/background';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
@@ -19,6 +21,7 @@ export default function Home() {
 			if (storedMode !== null) {
 				setMode(storedMode);
 			}
+      console.log(storedMode)
 		}, 250);
 
 		return () => clearInterval(intervalId);
@@ -26,7 +29,10 @@ export default function Home() {
 
   return (
     <main>
-      <div>
+      <div className={`h-screen w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#F1F1F1]'}`}>
+				<div className='fixed z-[-2]'>
+					<Bkg colorMode={mode} />
+				</div>
         <div className="sticky w-full top-0 z-[100]">
           <Header colorMode={mode} />
         </div>
