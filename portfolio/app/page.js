@@ -36,7 +36,7 @@ export default function Home() {
         <div className="sticky w-full top-0 z-[100]">
           <Header colorMode={mode} />
         </div>
-        <div className="z-[-1] fixed w-[100svw]" id="home">
+        <div className="fixed w-[100svw]" id="home">
           <Hero colorMode={mode} />
         </div>
         <div className="z-[15]">
