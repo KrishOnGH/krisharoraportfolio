@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className={`h-screen w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#F1F1F1]'}`}>
+      <div className={`w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#FDFDFD]'}`}>
 				<div className='fixed z-[-2]'>
 					<Bkg colorMode={mode} />
 				</div>
