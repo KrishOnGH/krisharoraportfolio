@@ -42,10 +42,15 @@ export default function SocialButtons({ colorMode }) {
 				</div>
 			</div>
 			
-			<div className='h-full w-full flex justify-center items-center'>
-				<div className='audiowide text-5xl lg:text-8xl mb-40'>
-					Krish Arora
-				</div>	
+			<div className='h-screen w-full flex items-center justify-center'>
+				<div className='w-[70%] lg:w-[45%] max-w-[800px] lg:px-0'>
+					<div className={`text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
+						Krish Arora
+					</div>  
+					<div className={`text-center fade-in-delay ${isDarkMode ? 'text-white' : 'text-black'} text-lg md:text-xl lg:text-3xl mb-40`}>
+						Hi there, I'm a passionate developer versed in languages across fields from C# to next.js!
+					</div>
+				</div>  
 			</div>
 		</main>
 	);

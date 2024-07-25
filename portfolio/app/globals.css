@@ -48,3 +48,33 @@
 .audiowide {
   font-family: var(--font-audiowide);
 }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDelay {
+  0%, 50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-up {
+  animation: fadeUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.fade-in-delay {
+  animation: fadeInDelay 2s ease-out forwards;
+  opacity: 0;
+}
