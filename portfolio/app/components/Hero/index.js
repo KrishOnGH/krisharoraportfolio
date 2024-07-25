@@ -61,7 +61,7 @@ export default function Hero({ colorMode }) {
 
 	return (
 		<main className='border-b-2 border-neutral-800'>
-			<div className="fade-in-delay fixed bottom-6 right-8 z-10">
+			<div className="fade-in-delay fixed bottom-6 sm:right-8 z-10 w-screen sm:w-fit flex justify-center sm:block">
 				<div className={`${bgColor} py-3 px-10 border ${borderColor} rounded-full flex space-x-8 ${shadowColor} w-max`}>
 					<button className={`${textColor} ${hoverColor} transition-colors`}>
 						<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`filter ${glowColor}`}>

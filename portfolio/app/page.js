@@ -5,6 +5,7 @@ import Bkg from './components/Header/background';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Stats from './components/Stats'
+import Timeline from './components/Timeline'
 import Footer from './components/Footer';
 
 export default function Home() {
@@ -41,6 +42,9 @@ export default function Home() {
         </div>
         <div className="w-[100svw]" id="stats">
           <Stats colorMode={mode} />
+        </div>
+        <div className="w-[100svw]" id="timeline">
+          <Timeline colorMode={mode} />
         </div>
         <div className="z-[15]">
           <Footer colorMode={mode} />
