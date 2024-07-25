@@ -73,6 +73,7 @@ export default function index(colorMode) {
 				<div className='lg:ml-[auto] lg:mr-auto'>
 					<nav className="ml-[44px] hidden lg:flex flex-wrap items-center border-2 border-neutral-800 rounded-full py-1 px-5">
 						<a className={`${colorMode ? 'hover:text-white' : 'hover:text-black'}`} href={`#home`}>Home</a>
+						<a className={`${colorMode ? 'hover:text-white' : 'hover:text-black'} ml-5`} href={`#stats`}>Statistics</a>
 					</nav>
 				</div>
 

@@ -107,7 +107,7 @@ export default function Hero({ colorMode }) {
 				<div className='w-full flex flex-col lg:flex-row justify-between mx-auto mb-40'>
 
 					<div className='w-full my-auto mx-auto lg:w-[45%] max-w-[800px] lg:ml-[4%]'>
-						<div className={`text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
+						<div className={`${glowColor} text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
 							Krish Arora
 						</div>  
 

@@ -4,7 +4,7 @@ import './globals.css'
 import Bkg from './components/Header/background';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Experience from './components/Experience'
+import Stats from './components/Stats'
 import Footer from './components/Footer';
 
 export default function Home() {
@@ -39,8 +39,8 @@ export default function Home() {
         <div className="w-[100svw]" id="home">
           <Hero colorMode={mode} />
         </div>
-        <div className="w-[100svw]" id="experience">
-          <Experience colorMode={mode} />
+        <div className="w-[100svw]" id="stats">
+          <Stats colorMode={mode} />
         </div>
         <div className="z-[15]">
           <Footer colorMode={mode} />
