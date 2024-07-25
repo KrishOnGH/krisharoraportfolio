@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function SocialButtons({ colorMode }) {
+export default function Hero({ colorMode }) {
 	const isDarkMode = colorMode === "dark";
+	const [scrollY, setScrollY] = useState(0);
+
+	useEffect(() => {
+		const handleScroll = () => setScrollY(window.scrollY);
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
 
 	const bgColor = isDarkMode ? "bg-[#1c1c1c]" : "bg-white";
 	const textColor = isDarkMode ? "text-white" : "text-black";
@@ -10,9 +17,32 @@ export default function SocialButtons({ colorMode }) {
 	const shadowColor = isDarkMode ? "shadow-[0_0_0_1px_rgba(255,255,255,0.1)]" : "shadow-[0_0_0_1px_rgba(0,0,0,0.1)]";
 	const glowColor = isDarkMode ? "drop-shadow-[0_0_2px_rgba(255,255,255,0.7)]" : "drop-shadow-[0_0_2px_rgba(255,255,255,0.7)]";
 
+	const colors = [
+		'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+		'bg-pink-500', 'bg-indigo-500', 'bg-teal-500', 'bg-orange-500',
+		'bg-lime-500', 'bg-emerald-500', 'bg-violet-500', 'bg-fuchsia-500'
+	];
+
+	const projectPlaceholder = (index, rowIndex) => {
+		const colorIndex = (index + rowIndex * 4) % colors.length;
+		return (
+			<div key={index} className={`w-[14vw] max-w-[250px] h-[calc(0.5625*14vw)] max-h-[calc(0.5625*250px)] ${colors[colorIndex]} rounded-md flex-shrink-0 mx-2`}></div>
+		);
+	};
+
+	const getRowStyle = (rowIndex) => {
+		const direction = rowIndex % 2 === 0 ? 1 : -1;
+		const width = .14*window.innerWidth+0.14
+		const offset = (scrollY * 0.3 * direction) % width; // 360 is the width of each item (320px) plus margins (40px)
+		return {
+			transform: `translateX(${offset}px)`,
+			transition: 'transform 0.1s ease-out'
+		};
+	};
+
 	return (
 		<main className='h-screen w-screen'>
-			<div className="fixed bottom-6 right-8">
+			<div className="fixed bottom-6 right-8 z-10">
 				<div className={`${bgColor} py-3 px-10 border ${borderColor} rounded-full flex space-x-8 ${shadowColor} w-max`}>
 					<button className={`${textColor} ${hoverColor} transition-colors`}>
 						<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`filter ${glowColor}`}>
@@ -42,14 +72,28 @@ export default function SocialButtons({ colorMode }) {
 				</div>
 			</div>
 			
-			<div className='h-screen w-full flex items-center justify-center'>
-				<div className='w-[70%] lg:w-[45%] max-w-[800px] lg:px-0'>
-					<div className={`text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
-						Krish Arora
-					</div>  
-					<div className={`text-center fade-in-delay ${isDarkMode ? 'text-white' : 'text-black'} text-lg md:text-xl lg:text-3xl mb-40`}>
-						Hi there, I'm a passionate developer versed in languages across fields from C# to next.js!
+			<div className='min-h-screen w-full flex items-center justify-center'>
+				<div className='w-full flex flex-col lg:flex-row justify-between mx-auto mb-40'>
+
+					<div className='w-full my-auto mx-auto lg:w-[45%] max-w-[800px] xl:ml-[4%]'>
+						<div className={`text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
+							Krish Arora
+						</div>  
+
+						<div className={`text-center fade-in-delay ${isDarkMode ? 'text-white' : 'text-black'} text-lg md:text-xl lg:text-3xl`}>
+							Hi there, I'm a passionate developer versed in languages across fields from C# to next.js!
+						</div>
 					</div>
+
+					<div className='hidden lg:flex flex-col space-y-8 w-[calc(42%+40px)] max-w-[790px] xl:mr-[4%] fade-in-delay overflow-hidden'>
+						{[0, 1, 2].map((rowIndex) => (
+							<div key={rowIndex} className='flex' style={getRowStyle(rowIndex)}>
+								{[...Array(3)].map((_, i) => projectPlaceholder(i, rowIndex))}
+								{[...Array(3)].map((_, i) => projectPlaceholder(i, rowIndex))}
+							</div>
+						))}
+					</div>
+
 				</div>  
 			</div>
 		</main>

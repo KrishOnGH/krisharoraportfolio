@@ -4,6 +4,7 @@ import './globals.css'
 import Bkg from './components/Header/background';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Experience from './components/Experience'
 import Footer from './components/Footer';
 
 export default function Home() {
@@ -35,8 +36,11 @@ export default function Home() {
         <div className="sticky w-full top-0 z-[100]">
           <Header colorMode={mode} />
         </div>
-        <div className="fixed w-[100svw]" id="home">
+        <div className="w-[100svw]" id="home">
           <Hero colorMode={mode} />
+        </div>
+        <div className="w-[100svw]" id="experience">
+          <Experience colorMode={mode} />
         </div>
         <div className="z-[15]">
           <Footer colorMode={mode} />
