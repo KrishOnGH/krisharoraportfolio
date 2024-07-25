@@ -26,9 +26,28 @@ export default function Hero({ colorMode }) {
 	const projectPlaceholder = (index, rowIndex) => {
 		const colorIndex = (index + rowIndex * 4) % colors.length;
 		return (
-			<div key={index} className={`w-[20vw] max-w-[400px] h-[calc(0.5625*20vw)] max-h-[calc(0.5625*400px)] ${colors[colorIndex]} rounded-md flex-shrink-0 mx-2`}></div>
+			<div 
+				key={index} 
+				className={`w-[20vw] max-w-[400px] h-[calc(0.5625*20vw)] max-h-[calc(0.5625*400px)] ${colors[colorIndex]} rounded-md flex-shrink-0 mx-2 relative hover:before:opacity-50 group transition-opacity duration-300`}
+			>
+				<div className='absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300'>
+					<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 
+						width="60px" height="60px" viewBox="0 0 471.621 471.621">
+						<g>
+							<path d="M353.35,118.267c1.425,1.421,2.104,3.419,1.844,5.423l-25.919,198.294c-0.188,1.454-0.856,2.755-1.838,3.742
+								c-0.969,0.969-2.234,1.625-3.683,1.832c-2.872,0.408-5.668-1.17-6.826-3.83l-34.525-79.624L150.285,376.227
+								c-2.524,2.519-6.629,2.53-9.159-0.006l-45.729-45.726c-2.53-2.529-2.524-6.632,0-9.162l132.117-132.114l-79.615-34.51
+								c-2.657-1.167-4.238-3.966-3.833-6.854c0.402-2.878,2.672-5.143,5.571-5.506l198.292-25.925
+								C349.927,116.165,351.937,116.856,353.35,118.267z M402.628,402.636c-91.978,91.978-241.662,91.978-333.643,0
+								c-91.98-91.982-91.98-241.658,0-333.645s241.665-91.986,333.648,0C494.623,160.978,494.611,310.647,402.628,402.636z
+								M384.334,87.288c-81.899-81.896-215.158-81.891-297.052,0c-81.896,81.905-81.891,215.154,0,297.049
+								c81.899,81.899,215.146,81.899,297.052,0C466.222,302.442,466.228,169.188,384.334,87.288z"/>
+						</g>
+					</svg>
+				</div>
+			</div>
 		);
-	};
+	};	
 
 	const getRowStyle = (rowIndex) => {
 		const direction = rowIndex % 2 === 0 ? 1 : -1;
@@ -87,7 +106,7 @@ export default function Hero({ colorMode }) {
 			<div className='min-h-screen w-screen flex items-center justify-center'>
 				<div className='w-full flex flex-col lg:flex-row justify-between mx-auto mb-40'>
 
-					<div className='w-full my-auto mx-auto lg:w-[45%] max-w-[800px] xl:ml-[4%]'>
+					<div className='w-full my-auto mx-auto lg:w-[45%] max-w-[800px] lg:ml-[4%]'>
 						<div className={`text-center audiowide fade-up ${isDarkMode ? 'text-white' : 'text-black'} text-5xl md:text-6xl xl:text-7xl mb-6`}>
 							Krish Arora
 						</div>  
@@ -97,7 +116,7 @@ export default function Hero({ colorMode }) {
 						</div>
 					</div>
 
-					<div className='hidden lg:flex flex-col space-y-8 w-[calc(42%+40px)] max-w-[790px] xl:mr-[4%] fade-in-delay overflow-hidden'>
+					<div className='hidden lg:flex flex-col space-y-8 rounded-2xl w-[calc(42%+40px)] max-w-[790px] lg:mr-[4%] fade-in-delay overflow-hidden'>
 						{[0, 1, 2].map((rowIndex) => (
 							<div key={rowIndex} className={`${rowIndex == 1 ? 'flex' : 'flex flex-row-reverse'}`} style={getRowStyle(rowIndex)}>
 								{[...Array(3)].map((_, i) => projectPlaceholder(i, rowIndex))}
