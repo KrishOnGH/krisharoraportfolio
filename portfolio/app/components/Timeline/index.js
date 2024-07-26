@@ -11,7 +11,6 @@ const timelineEvents = [
 export default function Timeline({ colorMode }) {
   const isDarkMode = colorMode === 'dark';
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isSticky, setIsSticky] = useState(false);
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
 
@@ -23,20 +22,27 @@ export default function Timeline({ colorMode }) {
     const handleScroll = () => {
       if (containerRef.current && timelineRef.current) {
         const containerRect = containerRef.current.getBoundingClientRect();
-        const timelineRect = timelineRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        if (containerRect.top <= 0 && containerRect.bottom >= windowHeight) {
-          setIsSticky(true);
-          timelineRef.current.style.position = 'fixed';
-          timelineRef.current.style.top = '50%';
-          timelineRef.current.style.transform = 'translateY(-50%)';
+        const scrollPosition = window.scrollY;
+        const containerTop = containerRect.top + scrollPosition;
+        const containerBottom = containerRect.bottom + scrollPosition;
+        
+        const timelineHeight = timelineRef.current.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        
+        let newTop;
+        
+        if (scrollPosition < containerTop) {
+          // Above the container
+          newTop = containerTop;
+        } else if (scrollPosition + viewportHeight > containerBottom) {
+          // Below the container
+          newTop = containerBottom - timelineHeight;
         } else {
-          setIsSticky(false);
-          timelineRef.current.style.position = 'absolute';
-          timelineRef.current.style.top = '50%';
-          timelineRef.current.style.transform = 'translateY(-50%)';
+          // Within the container
+          newTop = scrollPosition;
         }
+        
+        timelineRef.current.style.top = `${newTop - containerTop + 80}px`;
       }
     };
 
@@ -50,18 +56,23 @@ export default function Timeline({ colorMode }) {
     <div ref={containerRef} className={`relative ${textColor} w-full h-[200vh] overflow-hidden`}>
       <div 
         ref={timelineRef}
-        className={`left-8 w-0.5 ${borderColor} h-3/4 ${isSticky ? 'fixed' : 'absolute'}`}
+        className="absolute left-1/2 -translate-x-1/2 w-3/4"
+        style={{ top: '150px' }}
       >
+        <div className={`h-0.5 ${borderColor} w-full absolute top-1.5`}></div>
         {timelineEvents.map((event, index) => (
           <div
             key={index}
-            className={`absolute w-3 h-3 rounded-full -left-1.5 cursor-pointer ${
+            className={`absolute w-3 h-3 rounded-full cursor-pointer ${
               index === activeIndex ? 'bg-blue-500' : isDarkMode ? 'bg-gray-600' : 'bg-gray-400'
             }`}
-            style={{ top: `calc(${(index / (timelineEvents.length - 1)) * 100}vh - 6px)` }}
+            style={{ 
+              left: `calc(${(index / (timelineEvents.length - 1)) * 100}% - 6px)`,
+              top: '0'
+            }}
             onClick={() => setActiveIndex(index)}
           >
-            <span className={`absolute left-8 -top-2 whitespace-nowrap text-sm ${textColor}`}>
+            <span className={`absolute top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm ${textColor}`}>
               {event}
             </span>
           </div>
