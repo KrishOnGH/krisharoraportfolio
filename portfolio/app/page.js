@@ -23,7 +23,6 @@ export default function Home() {
 			if (storedMode !== null) {
 				setMode(storedMode);
 			}
-      console.log(storedMode)
 		}, 250);
 
 		return () => clearInterval(intervalId);
