@@ -24,48 +24,86 @@ export default function Timeline({ colorMode }) {
 	const glowColor = isDarkMode ? "drop-shadow-[0_0_2px_rgba(255,255,255,0.7)]" : "drop-shadow-[0_0_2px_rgba(255,255,255,0.7)]";
 
 	useEffect(() => {
+		let lastScrollTop = 0;
+		let isSnapping = false;
+	
 		const handleScroll = () => {
+			if (isSnapping) return;
+	
 			const scrollPosition = window.scrollY;
 			const viewportHeight = window.innerHeight;
-
+	
 			if (containerRef.current && timelineRef.current) {
 				const containerRect = containerRef.current.getBoundingClientRect();
 				const containerTop = containerRect.top + scrollPosition;
 				const containerBottom = containerRect.bottom + scrollPosition;
-
+	
 				if (scrollPosition < containerTop) {
-					timelineRef.current.style.position = 'absolute'
+					timelineRef.current.style.position = 'absolute';
 				} else if (scrollPosition + viewportHeight > containerBottom) {
-					timelineRef.current.style.position = 'absolute'
+					timelineRef.current.style.position = 'absolute';
 				} else {
-					timelineRef.current.style.position = 'fixed'
+					timelineRef.current.style.position = 'fixed';
 				}
 			}
-
-			const event1Top = event1.current.getBoundingClientRect().top + scrollPosition - viewportHeight/2
-			const event2Top = event2.current.getBoundingClientRect().top + scrollPosition - viewportHeight/2
-			const event3Top = event3.current.getBoundingClientRect().top + scrollPosition - viewportHeight/2
-			const event4Top = event4.current.getBoundingClientRect().top + scrollPosition - viewportHeight/2
-			const event5Top = event5.current.getBoundingClientRect().top + scrollPosition - viewportHeight/2
-
-			if (scrollPosition >= event5Top) {
-				setActiveIndex(4);
-			} else if (scrollPosition >= event4Top) {
-				setActiveIndex(3);
-			} else if (scrollPosition >= event3Top) {
-				setActiveIndex(2);
-			} else if (scrollPosition >= event2Top) {
-				setActiveIndex(1);
-			} else if (scrollPosition >= event1Top) {
-				setActiveIndex(0);
+	
+			const eventTops = [
+				event1.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
+				event2.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
+				event3.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
+				event4.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
+				event5.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2
+			];
+	
+			if (scrollPosition >= containerRef.current.offsetTop && scrollPosition + viewportHeight <= containerRef.current.offsetTop + containerRef.current.offsetHeight) {
+				let currentIndex
+				if (scrollPosition >= eventTops[4]) {
+					currentIndex = 4
+				} else if (scrollPosition >= eventTops[3]) {
+					currentIndex = 3
+				} else if (scrollPosition >= eventTops[2]) {
+					currentIndex = 2
+				} else if (scrollPosition >= eventTops[1]) {
+					currentIndex = 1
+				} else if (scrollPosition >= eventTops[0]) {
+					currentIndex = 0
+				}
+	
+				if (scrollPosition > lastScrollTop && currentIndex < eventTops.length - 1) {
+					// Scrolling down
+					isSnapping = true;
+					window.scrollTo(0, eventTops[currentIndex + 1] + viewportHeight / 2);
+					setActiveIndex(currentIndex + 1);
+				} else if (scrollPosition < lastScrollTop && currentIndex > 0) {
+					// Scrolling up
+					isSnapping = true;
+					window.scrollTo(0, eventTops[currentIndex - 1] + viewportHeight / 2);
+					setActiveIndex(currentIndex - 1);
+				}
 			} else {
-				setActiveIndex(null);
+				if (scrollPosition >= eventTops[4]) {
+					setActiveIndex(4);
+				} else if (scrollPosition >= eventTops[3]) {
+					setActiveIndex(3);
+				} else if (scrollPosition >= eventTops[2]) {
+					setActiveIndex(2);
+				} else if (scrollPosition >= eventTops[1]) {
+					setActiveIndex(1);
+				} else if (scrollPosition >= eventTops[0]) {
+					setActiveIndex(0);
+				}
 			}
-		};
-
+	
+			lastScrollTop = scrollPosition <= 0 ? 0 : scrollPosition;
+	
+			setTimeout(() => {
+				isSnapping = false;
+			}, 1000);
+		}
+	
 		window.addEventListener('scroll', handleScroll);
-		handleScroll(); // Initial check
-
+		handleScroll();
+	
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
