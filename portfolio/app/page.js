@@ -27,32 +27,40 @@ export default function Home() {
 
 		return () => clearInterval(intervalId);
 	}, []);
-
-  return (
-    <main>
-      <div className={`w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#FDFDFD]'}`}>
-				<div className='fixed z-[-2]'>
-					<Bkg colorMode={mode} />
-				</div>
-        <div className="sticky w-full top-0 z-[100]">
-          <Header colorMode={mode} />
+  
+	if (typeof window !== "undefined") {
+    return (
+      <main>
+        <div className={`w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#FDFDFD]'}`}>
+          <div className='fixed z-[-2]'>
+            <Bkg colorMode={mode} />
+          </div>
+          <div className="sticky w-full top-0 z-[100]">
+            <Header colorMode={mode} />
+          </div>
+          <div className="w-[100svw]" id="home">
+            <Hero colorMode={mode} />
+          </div>
+          <div className="w-[100svw]" id="stats">
+            <Stats colorMode={mode} />
+          </div>
+          <div className="w-[100svw]" id="timeline">
+            <Timeline colorMode={mode} />
+          </div>
+          <div className="w-[100svw]" id="contact">
+            <Contact colorMode={mode} />
+          </div>
+          <div className="z-[15]">
+            <Footer colorMode={mode} />
+          </div>
         </div>
-        <div className="w-[100svw]" id="home">
-          <Hero colorMode={mode} />
-        </div>
-        <div className="w-[100svw]" id="stats">
-          <Stats colorMode={mode} />
-        </div>
-        <div className="w-[100svw]" id="timeline">
-          <Timeline colorMode={mode} />
-        </div>
-        <div className="w-[100svw]" id="contact">
-          <Contact colorMode={mode} />
-        </div>
-        <div className="z-[15]">
-          <Footer colorMode={mode} />
-        </div>
+      </main>
+    );
+  } else {
+    return (
+      <div className={`w-screen ${mode == 'dark' ? 'bg-[#0b0d11]' : 'bg-[#FDFDFD]'} flex justify-center items-center h-screen`}>
+        <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-blue-500"></div>
       </div>
-    </main>
-  );
+    )
+  }
 }

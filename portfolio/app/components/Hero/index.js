@@ -51,14 +51,17 @@ export default function Hero({ colorMode }) {
 
 	const getRowStyle = (rowIndex) => {
 		const direction = rowIndex % 2 === 0 ? 1 : -1;
-		const width = .20*window.innerWidth+40
+		let width = 1
+		if (typeof window !== "undefined") {
+			width = .20*window.innerWidth+40
+		}
 		const offset = (scrollY * 0.3 * direction) % width; // 360 is the width of each item (320px) plus margins (40px)
 		return {
 			transform: `translateX(${offset}px)`,
 			transition: 'transform 0.1s ease-out'
 		};
 	};
-
+	
 	return (
 		<main className='border-b-2 border-neutral-800'>
 			<div className="fade-in-delay fixed bottom-6 sm:right-8 z-10 w-screen sm:w-fit flex justify-center sm:block">
