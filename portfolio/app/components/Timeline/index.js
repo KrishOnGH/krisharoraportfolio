@@ -8,16 +8,25 @@ const timelineEvents = [
 	"Fifth Event"
 ];
 
+const timelineEventsDisplaying = [
+	"First Event",
+	"Second Event",
+	"Third Event",
+	"Fourth Event",
+	"Fifth Event"
+];
+
 export default function Timeline({ colorMode }) {
 	const isDarkMode = colorMode === 'dark';
 	const [activeIndex, setActiveIndex] = useState(0);
 	const containerRef = useRef(null);
 	const timelineRef = useRef(null);
-	const event1 = useRef(null);
-	const event2 = useRef(null);
-	const event3 = useRef(null);
-	const event4 = useRef(null);
-	const event5 = useRef(null);
+	
+	const refs = useRef([]);
+
+	useEffect(() => {
+		refs.current = refs.current.slice(0, timelineEvents.length);
+	}, [timelineEvents.length]);
 
 	const textColor = isDarkMode ? 'text-white' : 'text-black';
 	const borderColor = isDarkMode ? "border-[#636363]" : "border-gray-300";
@@ -47,50 +56,37 @@ export default function Timeline({ colorMode }) {
 				}
 			}
 	
-			const eventTops = [
-				event1.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
-				event2.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
-				event3.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
-				event4.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2,
-				event5.current.getBoundingClientRect().top + scrollPosition - viewportHeight / 2
-			];
+			const eventTops = refs.current.map(ref => 
+				ref ? ref.getBoundingClientRect().top + window.scrollY - window.innerHeight / 4 : 0
+			);			  
 	
 			if (scrollPosition >= containerRef.current.offsetTop && scrollPosition + viewportHeight <= containerRef.current.offsetTop + containerRef.current.offsetHeight) {
 				let currentIndex
-				if (scrollPosition >= eventTops[4]) {
-					currentIndex = 4
-				} else if (scrollPosition >= eventTops[3]) {
-					currentIndex = 3
-				} else if (scrollPosition >= eventTops[2]) {
-					currentIndex = 2
-				} else if (scrollPosition >= eventTops[1]) {
-					currentIndex = 1
-				} else if (scrollPosition >= eventTops[0]) {
-					currentIndex = 0
+
+				for (let i = eventTops.length - 1; i >= 0; i--) {
+					if (scrollPosition >= eventTops[i]) {
+						currentIndex = i;
+						break;
+					}
 				}
 	
 				if (scrollPosition > lastScrollTop && currentIndex < eventTops.length - 1) {
 					// Scrolling down
 					isSnapping = true;
-					window.scrollTo(0, eventTops[currentIndex + 1] + viewportHeight / 2);
+					window.scrollTo(0, eventTops[currentIndex + 1] + viewportHeight / 4);
 					setActiveIndex(currentIndex + 1);
 				} else if (scrollPosition < lastScrollTop && currentIndex > 0) {
 					// Scrolling up
 					isSnapping = true;
-					window.scrollTo(0, eventTops[currentIndex - 1] + viewportHeight / 2);
+					window.scrollTo(0, eventTops[currentIndex - 1] + viewportHeight / 4);
 					setActiveIndex(currentIndex - 1);
 				}
 			} else {
-				if (scrollPosition >= eventTops[4]) {
-					setActiveIndex(4);
-				} else if (scrollPosition >= eventTops[3]) {
-					setActiveIndex(3);
-				} else if (scrollPosition >= eventTops[2]) {
-					setActiveIndex(2);
-				} else if (scrollPosition >= eventTops[1]) {
-					setActiveIndex(1);
-				} else if (scrollPosition >= eventTops[0]) {
-					setActiveIndex(0);
+				for (let i = eventTops.length - 1; i >= 0; i--) {
+					if (scrollPosition >= eventTops[i]) {
+						setActiveIndex(i);
+						break;
+					}
 				}
 			}
 	
@@ -98,7 +94,7 @@ export default function Timeline({ colorMode }) {
 	
 			setTimeout(() => {
 				isSnapping = false;
-			}, 1000);
+			}, 400);
 		}
 	
 		window.addEventListener('scroll', handleScroll);
@@ -133,23 +129,23 @@ export default function Timeline({ colorMode }) {
 				))}
 			</div>
 
-			<div ref={event1} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
+			<div ref={el => refs.current[0] = el} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
 				Content placeholder for event 1
 			</div>
 
-			<div ref={event2} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
+			<div ref={el => refs.current[1] = el} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
 				Content placeholder for event 2
 			</div>
 
-			<div ref={event3} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
+			<div ref={el => refs.current[2] = el} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
 				Content placeholder for event 3
 			</div>
 
-			<div ref={event4} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
+			<div ref={el => refs.current[3] = el} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
 				Content placeholder for event 4
 			</div>
 
-			<div ref={event5} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
+			<div ref={el => refs.current[4] = el} className={`${textColor} flex justify-center items-center h-screen w-screen`}>
 				Content placeholder for event 5
 			</div>
 		</div>

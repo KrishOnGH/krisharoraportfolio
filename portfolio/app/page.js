@@ -7,7 +7,6 @@ import Hero from './components/Hero';
 import Stats from './components/Stats'
 import Timeline from './components/Timeline'
 import Contact from './components/Contact'
-import Footer from './components/Footer';
 
 export default function Home() {
   const [mode, setMode] = useState("dark");
@@ -49,9 +48,6 @@ export default function Home() {
           </div>
           <div className="w-[100svw]" id="contact">
             <Contact colorMode={mode} />
-          </div>
-          <div className="z-[15]">
-            <Footer colorMode={mode} />
           </div>
         </div>
       </main>
