@@ -4,7 +4,8 @@
 
 This is my personal portfolio. It's created in next.js and currently is using a few placeholders.
 
-How to Run:
+
+# How to Run:
 
 cd web
 
@@ -12,7 +13,8 @@ npm run dev
 
 Go to localhost:3000 or the port it is running on
 
-Dependencies:
+
+# Dependencies:
 
 Next.js
 
